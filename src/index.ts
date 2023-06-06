@@ -23,26 +23,30 @@
  * questions.
  */
 
-import { App, IObject, Plugin } from "siyuan"
+import { App, getFrontend, IObject, Plugin } from "siyuan"
 import { simpleLogger } from "zhi-lib-base"
 
 import "../index.styl"
 import { isDev } from "./Constants"
+import { initTopbar, showSettingMenu } from "./topbar"
 
-export default class ImporterPlugin extends Plugin {
-  private logger
+export default class RandomDocPlugin extends Plugin {
+  public logger
+  public isMobile: boolean
 
   constructor(options: { app: App; id: string; name: string; i18n: IObject }) {
     super(options)
 
-    this.logger = simpleLogger("index", "demo", isDev)
+    this.logger = simpleLogger("index", "random-doc", isDev)
+    const frontEnd = getFrontend()
+    this.isMobile = frontEnd === "mobile" || frontEnd === "browser-mobile"
   }
 
-  onload() {
-    this.logger.info("Demo loaded")
+  async onload() {
+    await initTopbar(this)
   }
 
-  onunload() {
-    this.logger.info("Demo loaded")
+  openSetting() {
+    showSettingMenu(this)
   }
 }

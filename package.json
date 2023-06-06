@@ -2,7 +2,7 @@
   "name": "siyuan-plugin-random-doc",
   "version": "0.0.1",
   "type": "module",
-  "description": "Read documents randomly",
+  "description": "Document is like a box of chocolates. You never know what you're going to get",
   "repository": "terwer/siyuan-plugin-random-doc",
   "homepage": "https://github.com/terwer/siyuan-plugin-random-doc",
   "author": "terwer",
@@ -19,15 +19,15 @@
     "package": "python scripts/package.py"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^2.0.3",
-    "@terwer/eslint-config-custom": "^1.2.0",
-    "@terwer/vite-config-custom": "^0.7.0",
+    "@sveltejs/vite-plugin-svelte": "^2.4.1",
+    "@terwer/eslint-config-custom": "^1.3.4",
+    "@terwer/vite-config-custom": "^0.7.4",
     "@tsconfig/svelte": "^4.0.1",
     "siyuan": "^0.7.2",
     "stylus": "^0.59.0",
-    "svelte": "^3.57.0"
+    "svelte": "^3.59.1"
   },
   "dependencies": {
-    "zhi-lib-base": "^0.2.0"
+    "zhi-lib-base": "^0.2.4"
   }
 }
