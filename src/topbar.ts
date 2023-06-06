@@ -63,6 +63,7 @@ export async function initTopbar(pluginInstance: RandomDocPlugin) {
       this.element.innerHTML = await renderTabHtml(pluginInstance)
     },
     destroy() {
+      delete pluginInstance.tabInstance
       confirm("⚠️温馨提示", "是否重载？", () => {
         window.location.reload()
       })
