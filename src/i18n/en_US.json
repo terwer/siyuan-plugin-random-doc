@@ -1,4 +1,5 @@
 {
   "randomDoc": "Random Doc",
-  "setting": "Setting"
+  "setting": "Setting",
+  "docFetchError": "Ahh, the network is out of business, try to refresh again~"
 }

@@ -23,16 +23,20 @@
  * questions.
  */
 
-import { App, getFrontend, IObject, Plugin } from "siyuan"
+import { App, getFrontend, IModel, IObject, Plugin } from "siyuan"
 import { simpleLogger } from "zhi-lib-base"
 
 import "../index.styl"
 import { isDev } from "./Constants"
 import { initTopbar, showSettingMenu } from "./topbar"
+import KernelApi from "./api/kernel-api"
 
 export default class RandomDocPlugin extends Plugin {
   public logger
   public isMobile: boolean
+  public kernelApi: KernelApi
+  customTabObject: () => IModel
+  tabInstance
 
   constructor(options: { app: App; id: string; name: string; i18n: IObject }) {
     super(options)
@@ -40,13 +44,14 @@ export default class RandomDocPlugin extends Plugin {
     this.logger = simpleLogger("index", "random-doc", isDev)
     const frontEnd = getFrontend()
     this.isMobile = frontEnd === "mobile" || frontEnd === "browser-mobile"
+    this.kernelApi = new KernelApi()
   }
 
   async onload() {
     await initTopbar(this)
   }
 
-  openSetting() {
-    showSettingMenu(this)
-  }
+  // openSetting() {
+  //   showSettingMenu(this)
+  // }
 }

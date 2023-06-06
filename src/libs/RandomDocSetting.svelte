@@ -1,1 +1,1 @@
-<div>RandomDocSetting</div>
+<div>自定义设置开发中，敬请期待...</div>

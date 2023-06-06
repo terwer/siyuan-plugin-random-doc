@@ -1,4 +1,5 @@
 {
   "randomDoc": "文档漫游",
-  "setting": "设置"
+  "setting": "设置",
+  "docFetchError": "啊哦，网络出小差了呢，再刷新试试~"
 }
