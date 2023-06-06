@@ -28,6 +28,6 @@
     "svelte": "^3.57.0"
   },
   "dependencies": {
-    "zhi-lib-base": "^0.1.0"
+    "zhi-lib-base": "^0.2.0"
   }
 }
