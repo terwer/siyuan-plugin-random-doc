@@ -22,6 +22,9 @@ devDependencies:
   '@types/minimist':
     specifier: 1.2.2
     version: 1.2.2
+  fast-glob:
+    specifier: ^3.2.12
+    version: 3.2.12
   jsdom:
     specifier: ^22.0.0
     version: 22.1.0
