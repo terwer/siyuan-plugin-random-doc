@@ -1,6 +1,6 @@
 import RandomDocPlugin from "./index"
 import { icons } from "./utils/svg"
-import { Dialog, Menu, openTab, showMessage, confirm } from "siyuan"
+import { confirm, Dialog, Menu, openTab, showMessage } from "siyuan"
 import RandomDocSetting from "./libs/RandomDocSetting.svelte"
 
 const renderTabHtml = async (pluginInstance: RandomDocPlugin, rndId?: string) => {
@@ -8,10 +8,12 @@ const renderTabHtml = async (pluginInstance: RandomDocPlugin, rndId?: string) =>
     return ""
   }
 
-  const doc = await pluginInstance.kernelApi.getDoc(rndId)
-  const l = (window.Lute as any).New()
-  console.log(doc)
-  const content = l.Md2BlockDOM(doc.description)
+  const doc = (await pluginInstance.kernelApi.getDoc(rndId)).data as any
+  pluginInstance.logger.debug(`getDoc ${rndId} => `, doc)
+  const content = doc.content
+  pluginInstance.logger.debug("Md2BlockDOM content =>", {
+    content: content,
+  })
 
   const total = await pluginInstance.kernelApi.getRootBlocksCount()
   let visitCount = (await pluginInstance.kernelApi.getBlockAttrs(rndId))["custom-visit-count"] ?? 0
@@ -82,8 +84,7 @@ export async function initTopbar(pluginInstance: RandomDocPlugin) {
       showMessage(pluginInstance.i18n.docFetchError, 7000, "error")
       return
     }
-    // const rndId = rndResult.data[0].root_id
-    const rndId = "20230602184312-r1ygtpa"
+    const rndId = rndResult.data[0].root_id
 
     // 自定义tab
     if (!pluginInstance.tabInstance) {
