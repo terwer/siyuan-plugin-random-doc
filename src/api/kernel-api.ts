@@ -47,6 +47,21 @@ class KernelApi extends BaseApi {
   }
 
   /**
+   * 以id获取思源块信息
+   * @param blockId 块ID
+   */
+  public async getBlockByID(blockId: string): Promise<any> {
+    const stmt = `select *
+                from blocks
+                where id = '${blockId}'`
+    const data = (await this.sql(stmt)).data as any[]
+    if (!data || data.length === 0) {
+      throw new Error("通过ID查询块信息失败")
+    }
+    return data[0]
+  }
+
+  /**
    * 获取随机文档
    *
    * @param keyword

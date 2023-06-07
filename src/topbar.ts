@@ -8,9 +8,14 @@ const renderTabHtml = async (pluginInstance: RandomDocPlugin, rndId?: string) =>
     return ""
   }
 
+  const rootBlock = await pluginInstance.kernelApi.getBlockByID(rndId)
   const doc = (await pluginInstance.kernelApi.getDoc(rndId)).data as any
-  pluginInstance.logger.debug(`getDoc ${rndId} => `, doc)
+
+  const title = rootBlock.content
   const content = doc.content
+
+  pluginInstance.logger.debug(`rootBlock ${rndId} => `, rootBlock)
+  pluginInstance.logger.debug(`getDoc ${rndId} => `, doc)
   pluginInstance.logger.debug("Md2BlockDOM content =>", {
     content: content,
   })
@@ -21,15 +26,18 @@ const renderTabHtml = async (pluginInstance: RandomDocPlugin, rndId?: string) =>
   const contentHtml = `
   <div class="fn__flex-1 protyle" data-loading="finished">
       <div class="protyle-content protyle-content--transition" data-fullwidth="true">
-          <div class="protyle-wysiwyg protyle-wysiwyg--attr" spellcheck="false" contenteditable="false" style="padding: 16px 96px 281.5px;" data-doc-type="NodeDocument">
-            <div style="margin:20px 0"><button class="b3-button" id="edit">新页签编辑</button></div>
-            <div class="rnd-doc-custom-tips">
-              <div data-type="NodeParagraph" class="p" style="color: var(--b3-card-info-color);background-color: var(--b3-card-info-background);">
-                  <div class="t" contenteditable="false" spellcheck="false">${tips}</div><div class="protyle-attr" contenteditable="false"></div>
-              </div>
+        <div class="protyle-title protyle-wysiwyg--attr" style="margin: 16px 96px 0px;">      
+          <div style="margin:20px 0" contenteditable="false" data-position="center" spellcheck="false" class="protyle-title__input" data-render="true">${title}</div>
+        </div>
+        <div class="protyle-wysiwyg protyle-wysiwyg--attr" spellcheck="false" contenteditable="false" style="padding: 16px 96px 281.5px;" data-doc-type="NodeDocument">
+          <div style="margin:20px 0"><button class="b3-button" id="edit">新页签编辑</button></div>
+          <div class="rnd-doc-custom-tips">
+            <div data-type="NodeParagraph" class="p" style="color: var(--b3-card-info-color);background-color: var(--b3-card-info-background);">
+                <div class="t" contenteditable="false" spellcheck="false">${tips}</div><div class="protyle-attr" contenteditable="false"></div>
             </div>
-            ${content.replaceAll('contenteditable="true"', 'contenteditable="false"')}
           </div>
+          ${content.replaceAll('contenteditable="true"', 'contenteditable="false"')}
+        </div>
       </div>
   </div>`
 
