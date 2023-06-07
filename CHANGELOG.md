@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/terwer/siyuan-plugin-random-doc/compare/v1.0.1...v1.0.2) (2023-06-07)
+
+
+### Bug Fixes
+
+* 调整展示样式 ([1356661](https://github.com/terwer/siyuan-plugin-random-doc/commit/13566616488470543ea64218d207e4bcd566f4cf))
+
 ## [1.0.1](https://github.com/terwer/siyuan-plugin-random-doc/compare/v1.0.0...v1.0.1) (2023-06-07)
 ### Bug Fixes
 * 修复关闭之后无法打开的问题 ([1515926](https://github.com/terwer/siyuan-plugin-random-doc/commit/15159268aa3fbaaf18ffe2dc8a18c37d2b8dba34))
