@@ -16,18 +16,17 @@ const renderTabHtml = async (pluginInstance: RandomDocPlugin, rndId?: string) =>
   const total = await pluginInstance.kernelApi.getRootBlocksCount()
   let visitCount = (await pluginInstance.kernelApi.getBlockAttrs(rndId))["custom-visit-count"] ?? 0
   const tips = `哇哦，穿越大山，跨国大河，在${total}篇文档中，我又为您找到了一篇新的，您已经访问过他${visitCount}次哦~`
-  const contentHtml = `<div class="protyle fn__flex-1">
-      <div class="protyle-content" style="user-select: text">
-          <div class="protyle-wysiwyg protyle-wysiwyg--attr">
-          <div style="margin:20px 0">
-          <button class="b3-button" id="edit">新页签编辑</button>
-      </div>
-      <div class="rnd-doc-custom-tips">
-        <div data-type="NodeParagraph" class="p" style="color: var(--b3-card-info-color);background-color: var(--b3-card-info-background);">
-            <div class="t" contenteditable="true" spellcheck="false">${tips}</div><div class="protyle-attr" contenteditable="false"></div>
-        </div>
-      </div>
-      ${content.replaceAll('contenteditable="true"', 'contenteditable="false"')}
+  const contentHtml = `
+  <div class="fn__flex-1 protyle" data-loading="finished">
+      <div class="protyle-content protyle-content--transition" data-fullwidth="true">
+          <div class="protyle-wysiwyg protyle-wysiwyg--attr" spellcheck="false" contenteditable="false" style="padding: 16px 96px 281.5px;" data-doc-type="NodeDocument">
+            <div style="margin:20px 0"><button class="b3-button" id="edit">新页签编辑</button></div>
+            <div class="rnd-doc-custom-tips">
+              <div data-type="NodeParagraph" class="p" style="color: var(--b3-card-info-color);background-color: var(--b3-card-info-background);">
+                  <div class="t" contenteditable="false" spellcheck="false">${tips}</div><div class="protyle-attr" contenteditable="false"></div>
+              </div>
+            </div>
+            ${content.replaceAll('contenteditable="true"', 'contenteditable="false"')}
           </div>
       </div>
   </div>`
@@ -39,7 +38,7 @@ const renderTabHtml = async (pluginInstance: RandomDocPlugin, rndId?: string) =>
 }
 
 const openDocEditor = async (pluginInstance: RandomDocPlugin, rndId: string) => {
-  const tab = await openTab({
+  await openTab({
     app: pluginInstance.app,
     doc: {
       id: rndId,
@@ -83,8 +82,10 @@ export async function initTopbar(pluginInstance: RandomDocPlugin) {
       showMessage(pluginInstance.i18n.docFetchError, 7000, "error")
       return
     }
-    const rndId = rndResult.data[0].root_id
+    // const rndId = rndResult.data[0].root_id
+    const rndId = "20230602184312-r1ygtpa"
 
+    // 自定义tab
     if (!pluginInstance.tabInstance) {
       pluginInstance.tabInstance = openTab({
         app: pluginInstance.app,
