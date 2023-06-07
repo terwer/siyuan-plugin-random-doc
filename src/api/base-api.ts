@@ -87,14 +87,14 @@ export class BaseApi {
     }
 
     if (isDev) {
-      this.logger.info("开始向思源请求数据，reqUrl=>", reqUrl)
-      this.logger.info("开始向思源请求数据，fetchOps=>", fetchOps)
+      this.logger.debug("开始向思源请求数据，reqUrl=>", reqUrl)
+      this.logger.debug("开始向思源请求数据，fetchOps=>", fetchOps)
     }
 
     const response = await fetch(reqUrl, fetchOps)
     const resJson = (await response.json()) as SiyuanData
     if (isDev) {
-      this.logger.info("思源请求数据返回，resJson=>", resJson)
+      this.logger.debug("思源请求数据返回，resJson=>", resJson)
     }
     return resJson
   }
