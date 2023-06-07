@@ -29,6 +29,10 @@ export default defineConfig({
           dest: "./",
         },
         {
+          src: "./LICENSE",
+          dest: "./",
+        },
+        {
           src: "./icon.png",
           dest: "./",
         },
