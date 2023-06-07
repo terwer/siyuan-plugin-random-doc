@@ -50,7 +50,7 @@ export class BaseApi {
   private logger
 
   constructor() {
-    this.logger = simpleLogger("base-api", "custom-slug", isDev)
+    this.logger = simpleLogger("base-api", "random-doc", isDev)
   }
 
   /**
