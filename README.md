@@ -8,6 +8,11 @@ Document is like a box of chocolates. You never know what you're going to get
 
 ## update history
 
+**v1.0.1 (2023-06-07)**
+### Bug Fixes
+- Fix the problem that it cannot be opened after closing
+- Adjust display style
+
 **v1.0.0 major update**
 
 - first available version
