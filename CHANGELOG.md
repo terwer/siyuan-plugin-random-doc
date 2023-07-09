@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.0.2](https://github.com/terwer/siyuan-plugin-random-doc/compare/v1.0.1...v1.0.2) (2023-07-09)
+
+
+### Bug Fixes
+
+* **deps:** bump zhi-lib-base from 0.2.4 to 0.4.2 ([7f0b864](https://github.com/terwer/siyuan-plugin-random-doc/commit/7f0b8642d79888c81e41f7e299c68d3fdb45972a))
+* 修复文案错误 ([615e632](https://github.com/terwer/siyuan-plugin-random-doc/commit/615e63281f167e3c861b8e8f5196d1ddd591d739))
+* 显示文档标题 ([2693346](https://github.com/terwer/siyuan-plugin-random-doc/commit/2693346fd3fe72d8e5be80d3e691fe43a6ac7f8a))
+* 移除关闭提示 ([aaccdc6](https://github.com/terwer/siyuan-plugin-random-doc/commit/aaccdc62c01ecbbd22edb7db1cb4b3cba04e08fd))
+* 调整展示样式 ([1356661](https://github.com/terwer/siyuan-plugin-random-doc/commit/13566616488470543ea64218d207e4bcd566f4cf))
+
+
+### Miscellaneous
+
+* **deps-dev:** bump @sveltejs/vite-plugin-svelte from 2.4.1 to 2.4.2 ([27dfddb](https://github.com/terwer/siyuan-plugin-random-doc/commit/27dfddbd91247c5e0580a104eb4b646f164ecaf1))
+* **deps-dev:** bump @terwer/eslint-config-custom from 1.3.4 to 1.3.6 ([be54834](https://github.com/terwer/siyuan-plugin-random-doc/commit/be548341a99cfb4b6a8fd5e6c0b296b1fec3837f))
+* **deps-dev:** bump @tsconfig/svelte from 4.0.1 to 5.0.0 ([9d054dc](https://github.com/terwer/siyuan-plugin-random-doc/commit/9d054dc83c657405815dd43be1f55226754dd8d2))
+* **deps-dev:** bump siyuan from 0.7.2 to 0.7.6 ([e67f4cd](https://github.com/terwer/siyuan-plugin-random-doc/commit/e67f4cd06bec5cf809ec6074ba55075e561cdf36))
+* **deps-dev:** bump svelte from 3.59.1 to 4.0.5 ([cfd5377](https://github.com/terwer/siyuan-plugin-random-doc/commit/cfd53773cedc15174d07beeb4fc9e3c62f0fc0f1))
+* **deps-dev:** bump typescript from 5.0.4 to 5.1.6 ([2754215](https://github.com/terwer/siyuan-plugin-random-doc/commit/2754215a6a8a7b42143ec1ac1130daed6ff7cfb6))
+* **deps-dev:** bump vite-plugin-node-polyfills from 0.8.2 to 0.9.0 ([32b4498](https://github.com/terwer/siyuan-plugin-random-doc/commit/32b4498621db8c21751f5ab192cebed186b7dc10))
+* **deps-dev:** bump vitest from 0.32.0 to 0.33.0 ([fe870d5](https://github.com/terwer/siyuan-plugin-random-doc/commit/fe870d5a2e4d777f33ebb15b358fa4fb355a6a73))
+
 ## [1.0.1](https://github.com/terwer/siyuan-plugin-random-doc/compare/v1.0.0...v1.0.1) (2023-06-07)
 ### Bug Fixes
 * 修复关闭之后无法打开的问题 ([1515926](https://github.com/terwer/siyuan-plugin-random-doc/commit/15159268aa3fbaaf18ffe2dc8a18c37d2b8dba34))
