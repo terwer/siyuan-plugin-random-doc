@@ -73,9 +73,9 @@ export async function initTopbar(pluginInstance: RandomDocPlugin) {
     },
     destroy() {
       delete pluginInstance.tabInstance
-      confirm("⚠️温馨提示", "是否重载？", () => {
-        window.location.reload()
-      })
+      // confirm("⚠️温馨提示", "是否重载？", () => {
+      //   window.location.reload()
+      // })
     },
   })
 
