@@ -22,7 +22,7 @@ const renderTabHtml = async (pluginInstance: RandomDocPlugin, rndId?: string) =>
 
   const total = await pluginInstance.kernelApi.getRootBlocksCount()
   let visitCount = (await pluginInstance.kernelApi.getBlockAttrs(rndId))["custom-visit-count"] ?? 0
-  const tips = `哇哦，穿越大山，跨国大河，在${total}篇文档中，我又为您找到了一篇新的，您已经访问过他${visitCount}次哦~`
+  const tips = `哇哦，穿越大山，跨过大河，在${total}篇文档中，我又为您找到了一篇新的，您已经访问过他${visitCount}次哦~`
   const contentHtml = `
   <div class="fn__flex-1 protyle" data-loading="finished">
       <div class="protyle-content protyle-content--transition" data-fullwidth="true">
