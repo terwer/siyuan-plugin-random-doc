@@ -8,6 +8,10 @@ Document is like a box of chocolates. You never know what you're going to get
 
 ## update history
 
+**v1.0.2 (2023-07-09)**
+### Bug Fixes
+- Fixed typo error ([615e632](https://github.com/terwer/siyuan-plugin-random-doc/commit/615e63281f167e3c861b8e8f5196d1ddd591d739))
+
 **v1.0.1 (2023-06-07)**
 ### Bug Fixes
 - Fix the problem that it cannot be opened after closing

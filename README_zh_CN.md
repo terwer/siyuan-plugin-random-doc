@@ -8,6 +8,10 @@
 
 ## 更新历史
 
+**v1.0.2 (2023-07-09)**
+### Bug Fixes
+- 修复文案错误 ([615e632](https://github.com/terwer/siyuan-plugin-random-doc/commit/615e63281f167e3c861b8e8f5196d1ddd591d739))
+
 **v1.0.1 (2023-06-07)**
 ### Bug Fixes
 - 修复关闭之后无法打开的问题
