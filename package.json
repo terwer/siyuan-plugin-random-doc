@@ -39,6 +39,6 @@
     "vitest": "^0.33.0"
   },
   "dependencies": {
-    "zhi-lib-base": "^0.4.2"
+    "zhi-lib-base": "^0.4.3"
   }
 }
