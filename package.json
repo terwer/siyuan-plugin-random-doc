@@ -27,7 +27,7 @@
     "jsdom": "^22.0.0",
     "minimist": "^1.2.8",
     "rollup-plugin-livereload": "^2.0.5",
-    "siyuan": "^0.7.6",
+    "siyuan": "^0.8.4",
     "stylus": "^0.59.0",
     "svelte": "^4.0.5",
     "typescript": "^5.1.6",
