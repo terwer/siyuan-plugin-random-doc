@@ -8,6 +8,18 @@ Document is like a box of chocolates. You never know what you're going to get
 
 ## update history
 
+**Version 1.1.0 (2023-10-16)**
+
+# Novel Additions
+
+* Introduction of notebook selection.
+* Addition of seamless roaming continuation.
+
+### Rectification of Errors
+
+* Code reformation.
+* Adaptation to the latest release.
+
 **v1.0.2 (2023-07-09)**
 ### Bug Fixes
 - Fixed typo error ([615e632](https://github.com/terwer/siyuan-plugin-random-doc/commit/615e63281f167e3c861b8e8f5196d1ddd591d739))
