@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/terwer/siyuan-plugin-random-doc/compare/v1.0.2...v1.1.0) (2023-10-16)
+
+
+### Features
+
+* 代码重构、适配新版本、提供笔记本选择、新增继续漫游 ([ee23f24](https://github.com/terwer/siyuan-plugin-random-doc/commit/ee23f240616ebf5f8574bc14db63366c753ce59c))
+
 ## [1.0.2](https://github.com/terwer/siyuan-plugin-random-doc/compare/v1.0.1...v1.0.2) (2023-07-09)
 ### Bug Fixes
 * **deps:** bump zhi-lib-base from 0.2.4 to 0.4.2 ([7f0b864](https://github.com/terwer/siyuan-plugin-random-doc/commit/7f0b8642d79888c81e41f7e299c68d3fdb45972a))
