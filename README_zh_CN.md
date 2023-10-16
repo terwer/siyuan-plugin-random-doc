@@ -8,6 +8,17 @@
 
 ## 更新历史
 
+**v1.1.0 (2023-10-16)**
+
+# New Features
+
+* 提供笔记本选择
+* 新增继续漫游
+* 
+### Bug Fixes
+* 代码重构
+* 适配新版本
+
 **v1.0.2 (2023-07-09)**
 ### Bug Fixes
 - 修复文案错误 ([615e632](https://github.com/terwer/siyuan-plugin-random-doc/commit/615e63281f167e3c861b8e8f5196d1ddd591d739))
