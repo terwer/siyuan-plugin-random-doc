@@ -28,7 +28,7 @@ import { simpleLogger } from "zhi-lib-base"
 
 import "../index.styl"
 import { isDev } from "./Constants"
-import { initTopbar, showSettingMenu } from "./topbar"
+import { initTopbar } from "./topbar"
 import KernelApi from "./api/kernel-api"
 
 export default class RandomDocPlugin extends Plugin {
@@ -54,4 +54,22 @@ export default class RandomDocPlugin extends Plugin {
   // openSetting() {
   //   showSettingMenu(this)
   // }
+
+  // ================
+  // private function
+  // ================
+  /**
+   * 安全的加载配置
+   *
+   * @param storeName 存储 key
+   */
+  public async safeLoad(storeName: string) {
+    let storeConfig = await this.loadData(storeName)
+
+    if (typeof storeConfig !== "object") {
+      storeConfig = {}
+    }
+
+    return storeConfig
+  }
 }
