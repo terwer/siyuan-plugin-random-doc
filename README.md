@@ -10,12 +10,12 @@ Document is like a box of chocolates. You never know what you're going to get
 
 **Version 1.1.0 (2023-10-16)**
 
-# Novel Additions
+### New Features
 
 * Introduction of notebook selection.
 * Addition of seamless roaming continuation.
 
-### Rectification of Errors
+### Bug Fixes
 
 * Code reformation.
 * Adaptation to the latest release.
