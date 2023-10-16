@@ -24,6 +24,7 @@
  */
 
 import { BaseApi, SiyuanData } from "./base-api"
+import { StrUtil } from "zhi-common"
 
 /**
  * 思源笔记服务端API v2.8.9
@@ -35,6 +36,13 @@ import { BaseApi, SiyuanData } from "./base-api"
  * @since 0.0.1
  */
 class KernelApi extends BaseApi {
+  /**
+   * 列出笔记本
+   */
+  public async lsNotebooks(): Promise<SiyuanData> {
+    return await this.siyuanRequest("/api/notebook/lsNotebooks", {})
+  }
+
   /**
    * 分页获取根文档
    *
@@ -64,10 +72,14 @@ class KernelApi extends BaseApi {
   /**
    * 获取随机文档
    *
-   * @param keyword
+   * @param notebookId
    */
-  public async getRandomRootBlocks(keyword?: string): Promise<SiyuanData> {
-    const stmt = `SELECT DISTINCT b.root_id,b.content FROM blocks b ORDER BY random() LIMIT 1`
+  public async getRandomRootBlocks(notebookId?: string): Promise<SiyuanData> {
+    const condition = StrUtil.isEmptyString(notebookId) ? "" : `and box = '${notebookId}'`
+    const stmt = `SELECT DISTINCT b.root_id, b.content FROM blocks b 
+    WHERE 1=1 ${condition}
+    ORDER BY random() LIMIT 1`
+    this.logger.info("random sql =>", stmt)
     return await this.sql(stmt)
   }
 

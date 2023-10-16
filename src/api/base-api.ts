@@ -47,7 +47,7 @@ export interface SiyuanData {
 }
 
 export class BaseApi {
-  private logger
+  protected logger
 
   constructor() {
     this.logger = simpleLogger("base-api", "random-doc", isDev)

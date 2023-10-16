@@ -23,9 +23,14 @@
  * questions.
  */
 
-export const workspaceDir = `${(window as any).siyuan.config.system.workspaceDir}`
-export const dataDir = `${(window as any).siyuan.config.system.dataDir}`
-export const isDev = (window as any).process.env.DEV_MODE === "true"
-export const siyuanApiUrl = ""
-export const siyuanApiToken = ""
-export const storeName = "random-doc.json"
+/**
+ * 存储对象
+ */
+class StoreConfig {
+  /**
+   * 笔记本ID
+   */
+  public notebookId: string
+}
+
+export default StoreConfig
