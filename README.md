@@ -6,7 +6,15 @@
 
 Document is like a box of chocolates. You never know what you're going to get
 
+**Support hot key：⌥⌘M**
+
 ## update history
+
+**Version 1.2.0 (2023-10-17)**
+
+### New Features
+
+* Support hot key：⌥⌘M
 
 **Version 1.1.0 (2023-10-16)**
 

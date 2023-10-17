@@ -28,9 +28,11 @@
   import { storeName } from "../Constants"
   import StoreConfig from "../models/StoreConfig"
   import { openTab, showMessage } from "siyuan"
+  import RandomDocPlugin from "../index"
+  import Loading from "./Loading.svelte"
 
   // props
-  export let pluginInstance: ImporterPlugin
+  export let pluginInstance: RandomDocPlugin
 
   // vars
   let isLoading = false
@@ -38,12 +40,17 @@
   let notebooks = []
   let toNotebookId = ""
   let title = "文档漫步"
-  let tips = "Default Tips"
-  let currentRndId = "文档漫步"
-  let content = "Default Content"
+  let tips = "信息提升"
+  let currentRndId = ""
+  let content = "暂无内容"
 
   // methods
-  const doRandomDoc = async () => {
+  export const doRandomDoc = async () => {
+    if(isLoading){
+      pluginInstance.logger.warn("上次随机还未结束，忽略")
+      return
+    }
+
     try {
       isLoading = true
       pluginInstance.logger.info("开始漫游...")
@@ -64,9 +71,9 @@
       const rootBlock = await pluginInstance.kernelApi.getBlockByID(rndId)
       const doc = (await pluginInstance.kernelApi.getDoc(rndId)).data as any
       title = rootBlock.content
-      content = doc.content
+      content = doc.content ?? ""
       // 只读
-      content = content.replaceAll('contenteditable="true"', 'contenteditable="false"')
+      content = content.replace(/contenteditable="true"/g, 'contenteditable="false"')
       const total = await pluginInstance.kernelApi.getRootBlocksCount()
       const visitCount = parseInt((await pluginInstance.kernelApi.getBlockAttrs(rndId))["custom-visit-count"] ?? 0)
       const newVisitCount = visitCount + 1
@@ -105,7 +112,7 @@
 
     // 读取笔记本
     const res = await pluginInstance.kernelApi.lsNotebooks()
-    notebooks = res?.data?.notebooks ?? []
+    notebooks = (res?.data as any)?.notebooks ?? []
     // 用户指南不应该作为可以写入的笔记本
     const hiddenNotebook: Set<string> = new Set(["思源笔记用户指南", "SiYuan User Guide"])
     // 没有必要把所有笔记本都列出来
@@ -119,6 +126,7 @@
 </script>
 
 <div class="fn__flex-1 protyle" data-loading="finished">
+  <Loading show={isLoading} />
   <div class="protyle-content protyle-content--transition" data-fullwidth="true">
     <div class="protyle-title protyle-wysiwyg--attr" style="margin: 16px 96px 0px;">
       <div
@@ -154,7 +162,8 @@
             <option value="0">{pluginInstance.i18n.loading}...</option>
           {/each}
         </select>
-        <button class="action-item b3-button fr" id="edit" on:click={doRandomDoc}>继续漫游</button>
+        <span class="note-select-tip">继续漫游快捷键为：⌥⌘M</span>
+        <button class="action-item b3-button fr" on:click={doRandomDoc} title="⌥⌘M">继续漫游</button>
       </div>
       <div class="rnd-doc-custom-tips">
         <div
