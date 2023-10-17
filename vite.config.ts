@@ -13,7 +13,9 @@ const isWindows = process.platform === "win32"
 // Home
 let devDistDir = "/Users/zhangyue/Documents/terwer/SiyuanWorkspace/test/data/plugins/siyuan-plugin-random-doc"
 if (isWindows) {
-  devDistDir = "C:\\Users\\terwer\\Documents\\mydocs\\SiyuanWorkspace\\public\\data\\plugins\\siyuan-plugin-random-doc"
+  // devDistDir = "C:\\Users\\terwer\\Documents\\mydocs\\SiyuanWorkspace\\public\\data\\plugins\\siyuan-plugin-random-doc"
+  // Bootcamp
+  devDistDir = "C:\\Users\\Terwer\\Documents\\mydocs\\SiyuanWorkspace\\test\\data\\plugins\\siyuan-plugin-random-doc"
 }
 const distDir = isWatch ? devDistDir : "./dist"
 

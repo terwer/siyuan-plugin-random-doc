@@ -28,15 +28,17 @@ import { simpleLogger } from "zhi-lib-base"
 
 import "../index.styl"
 import { isDev } from "./Constants"
-import { initTopbar } from "./topbar"
+import { initTopbar, registerCommand } from "./topbar"
 import KernelApi from "./api/kernel-api"
 
 export default class RandomDocPlugin extends Plugin {
   public logger
   public isMobile: boolean
   public kernelApi: KernelApi
-  customTabObject: () => IModel
-  tabInstance
+
+  public customTabObject: () => IModel
+  public tabInstance
+  public tabContentInstance
 
   constructor(options: { app: App; id: string; name: string; i18n: IObject }) {
     super(options)
@@ -49,6 +51,7 @@ export default class RandomDocPlugin extends Plugin {
 
   async onload() {
     await initTopbar(this)
+    await registerCommand(this)
   }
 
   // openSetting() {
