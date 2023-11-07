@@ -9,6 +9,7 @@
   "license": "MIT",
   "scripts": {
     "serve": "vite",
+    "makeLink": "python scripts/make_dev_link.py",
     "dev": "vite build --watch",
     "build": "vite build",
     "start": "vite preview",
