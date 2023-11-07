@@ -10,7 +10,8 @@
     "darwin"
   ],
   "frontends": [
-    "desktop"
+    "desktop",
+    "browser-desktop"
   ],
   "displayName": {
     "en_US": "Random Doc",
