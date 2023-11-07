@@ -11,6 +11,12 @@ Document is like a box of chocolates. You never know what you're going to get
 
 ## update history
 
+**Version 1.2.1 (2023-11-07)**
+
+### Bug Fixes
+
+* Addressed potential issues that might arise in certain scenarios, ensuring compatibility.
+
 **Version 1.2.0 (2023-10-17)**
 
 ### New Features

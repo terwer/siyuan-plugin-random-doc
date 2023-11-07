@@ -1,5 +1,5 @@
 import { resolve } from "path"
-import { defineConfig, loadEnv } from "vite"
+import { defineConfig } from "vite"
 import minimist from "minimist"
 import { viteStaticCopy } from "vite-plugin-static-copy"
 import livereload from "rollup-plugin-livereload"
@@ -8,16 +8,7 @@ import fg from "fast-glob"
 
 const args = minimist(process.argv.slice(2))
 const isWatch = args.watch || args.w || false
-const isWindows = process.platform === "win32"
-// let devDistDir = "/Users/terwer/Documents/mydocs/SiYuanWorkspace/public/data/plugins/siyuan-plugin-random-doc"
-// Home
-let devDistDir = "/Users/zhangyue/Documents/terwer/SiyuanWorkspace/test/data/plugins/siyuan-plugin-random-doc"
-if (isWindows) {
-  // devDistDir = "C:\\Users\\terwer\\Documents\\mydocs\\SiyuanWorkspace\\public\\data\\plugins\\siyuan-plugin-random-doc"
-  // Bootcamp
-  devDistDir = "C:\\Users\\Terwer\\Documents\\mydocs\\SiyuanWorkspace\\test\\data\\plugins\\siyuan-plugin-random-doc"
-}
-const distDir = isWatch ? devDistDir : "./dist"
+const distDir = "./dist"
 
 console.log("isWatch=>", isWatch)
 console.log("distDir=>", distDir)
@@ -89,7 +80,7 @@ export default defineConfig({
       plugins: [
         ...(isWatch
           ? [
-              livereload(devDistDir),
+              livereload(distDir),
               {
                 //监听静态资源文件
                 name: "watch-external",
