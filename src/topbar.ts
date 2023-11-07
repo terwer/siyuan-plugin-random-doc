@@ -1,60 +1,7 @@
 import RandomDocPlugin from "./index"
 import { icons } from "./utils/svg"
-import { confirm, Dialog, Menu, openTab, showMessage } from "siyuan"
-import RandomDocSetting from "./libs/RandomDocSetting.svelte"
-
-const renderTabHtml = async (pluginInstance: RandomDocPlugin, rndId?: string) => {
-  if (!rndId) {
-    return ""
-  }
-
-  const rootBlock = await pluginInstance.kernelApi.getBlockByID(rndId)
-  const doc = (await pluginInstance.kernelApi.getDoc(rndId)).data as any
-
-  const title = rootBlock.content
-  const content = doc.content
-
-  pluginInstance.logger.debug(`rootBlock ${rndId} => `, rootBlock)
-  pluginInstance.logger.debug(`getDoc ${rndId} => `, doc)
-  pluginInstance.logger.debug("Md2BlockDOM content =>", {
-    content: content,
-  })
-
-  const total = await pluginInstance.kernelApi.getRootBlocksCount()
-  let visitCount = (await pluginInstance.kernelApi.getBlockAttrs(rndId))["custom-visit-count"] ?? 0
-  const tips = `哇哦，穿越大山，跨过大河，在${total}篇文档中，我又为您找到了一篇新的，您已经访问过他${visitCount}次哦~`
-  const contentHtml = `
-  <div class="fn__flex-1 protyle" data-loading="finished">
-      <div class="protyle-content protyle-content--transition" data-fullwidth="true">
-        <div class="protyle-title protyle-wysiwyg--attr" style="margin: 16px 96px 0px;">      
-          <div style="margin:20px 0" contenteditable="false" data-position="center" spellcheck="false" class="protyle-title__input" data-render="true">${title}</div>
-        </div>
-        <div class="protyle-wysiwyg protyle-wysiwyg--attr" spellcheck="false" contenteditable="false" style="padding: 16px 96px 281.5px;" data-doc-type="NodeDocument">
-          <div style="margin:20px 0"><button class="b3-button" id="edit">新页签编辑</button></div>
-          <div class="rnd-doc-custom-tips">
-            <div data-type="NodeParagraph" class="p" style="color: var(--b3-card-info-color);background-color: var(--b3-card-info-background);">
-                <div class="t" contenteditable="false" spellcheck="false">${tips}</div><div class="protyle-attr" contenteditable="false"></div>
-            </div>
-          </div>
-          ${content.replaceAll('contenteditable="true"', 'contenteditable="false"')}
-        </div>
-      </div>
-  </div>`
-
-  await pluginInstance.kernelApi.setBlockAttrs(rndId, {
-    "custom-visit-count": (++visitCount).toString(),
-  })
-  return contentHtml
-}
-
-const openDocEditor = async (pluginInstance: RandomDocPlugin, rndId: string) => {
-  await openTab({
-    app: pluginInstance.app,
-    doc: {
-      id: rndId,
-    },
-  })
-}
+import { openTab } from "siyuan"
+import RandomDocContent from "./libs/RandomDocContent.svelte"
 
 /**
  * 顶栏按钮
@@ -68,14 +15,10 @@ export async function initTopbar(pluginInstance: RandomDocPlugin) {
   const TAB_TYPE = "random_doc_custom_tab"
   pluginInstance.customTabObject = pluginInstance.addTab({
     type: TAB_TYPE,
-    async init() {
-      this.element.innerHTML = await renderTabHtml(pluginInstance)
-    },
-    destroy() {
+    async init() {},
+    beforeDestroy() {
       delete pluginInstance.tabInstance
-      // confirm("⚠️温馨提示", "是否重载？", () => {
-      //   window.location.reload()
-      // })
+      pluginInstance.logger.info("tabInstance destroyed")
     },
   })
 
@@ -87,76 +30,61 @@ export async function initTopbar(pluginInstance: RandomDocPlugin) {
   })
 
   topBarElement.addEventListener("click", async () => {
-    const rndResult = await pluginInstance.kernelApi.getRandomRootBlocks()
-    if (rndResult.code !== 0) {
-      showMessage(pluginInstance.i18n.docFetchError, 7000, "error")
-      return
-    }
-    const rndId = rndResult.data[0].root_id
+    await triggerRandomDoc(pluginInstance)
+  })
+}
 
-    // 自定义tab
-    if (!pluginInstance.tabInstance) {
-      pluginInstance.tabInstance = openTab({
-        app: pluginInstance.app,
-        custom: {
-          icon: "",
-          title: pluginInstance.i18n.randomDoc,
-          fn: pluginInstance.customTabObject,
-        },
-      })
-    }
-    pluginInstance.tabInstance.panelElement.innerHTML = await renderTabHtml(pluginInstance, rndId)
-    pluginInstance.tabInstance.panelElement.querySelector("#edit").addEventListener("click", () => {
-      openDocEditor(pluginInstance, rndId)
+/**
+ * 触发打开tab以及开始漫游
+ *
+ * @param pluginInstance
+ */
+const triggerRandomDoc = async (pluginInstance: RandomDocPlugin) => {
+  // 自定义tab
+  if (!pluginInstance.tabInstance) {
+    const tabInstance = openTab({
+      app: pluginInstance.app,
+      custom: {
+        title: pluginInstance.i18n.randomDoc,
+        icon: "iconRefresh",
+        fn: pluginInstance.customTabObject,
+      } as any,
     })
-  })
 
-  // 添加右键菜单
-  // topBarElement.addEventListener("contextmenu", () => {
-  //   let rect = topBarElement.getBoundingClientRect()
-  //   // 如果获取不到宽度，则使用更多按钮的宽度
-  //   if (rect.width === 0) {
-  //     rect = document.querySelector("#barMore")?.getBoundingClientRect() as DOMRect
-  //   }
-  //   initContextMenu(pluginInstance, rect)
-  // })
-}
+    // 修复后续API改动
+    if (tabInstance instanceof Promise) {
+      pluginInstance.tabInstance = await tabInstance
+    } else {
+      pluginInstance.tabInstance = tabInstance
+    }
 
-export const showSettingMenu = (pluginInstance: RandomDocPlugin) => {
-  const settingId = "siyuan-random-doc-setting"
-  const d = new Dialog({
-    title: `${pluginInstance.i18n.setting} - ${pluginInstance.i18n.randomDoc}`,
-    content: `<div id="${settingId}"></div>`,
-    width: pluginInstance.isMobile ? "92vw" : "720px",
-  })
-  new RandomDocSetting({
-    target: document.getElementById(settingId) as HTMLElement,
-    props: {
-      pluginInstance: pluginInstance,
-      dialog: d,
-    },
-  })
-}
-
-const initContextMenu = async (pluginInstance: RandomDocPlugin, rect: DOMRect) => {
-  const menu = new Menu("randomDocContextMenu")
-
-  // 设置
-  menu.addItem({
-    iconHTML: icons.iconSetting,
-    label: pluginInstance.i18n.setting,
-    click: () => {
-      showSettingMenu(pluginInstance)
-    },
-  })
-
-  if (pluginInstance.isMobile) {
-    menu.fullscreen()
+    // 加载内容
+    pluginInstance.tabContentInstance = new RandomDocContent({
+      target: pluginInstance.tabInstance.panelElement as HTMLElement,
+      props: {
+        pluginInstance: pluginInstance,
+      },
+    })
   } else {
-    menu.open({
-      x: rect.right,
-      y: rect.bottom,
-      isLeft: true,
-    })
+    await pluginInstance.tabContentInstance.doRandomDoc()
+    console.log("再次点击或者重复触发")
   }
+}
+
+/**
+ * 注册快捷键
+ *
+ * @param pluginInstance
+ */
+export async function registerCommand(pluginInstance: RandomDocPlugin) {
+  //添加快捷键
+  pluginInstance.addCommand({
+    langKey: "startRandomDoc",
+    hotkey: "⌥⌘M",
+    callback: async () => {
+      pluginInstance.logger.info("快捷键已触发 ⌘⇧M")
+      await triggerRandomDoc(pluginInstance)
+    },
+  })
+  pluginInstance.logger.info("文档漫步快捷键已注册为 ⌘⇧M")
 }

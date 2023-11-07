@@ -6,7 +6,28 @@
 
 Document is like a box of chocolates. You never know what you're going to get
 
+**Support hot key：⌥⌘M**
+**Support new window edit**
+
 ## update history
+
+**Version 1.2.0 (2023-10-17)**
+
+### New Features
+
+* Support hot key：⌥⌘M
+
+**Version 1.1.0 (2023-10-16)**
+
+### New Features
+
+* Introduction of notebook selection.
+* Addition of seamless roaming continuation.
+
+### Bug Fixes
+
+* Code reformation.
+* Adaptation to the latest release.
 
 **v1.0.2 (2023-07-09)**
 ### Bug Fixes

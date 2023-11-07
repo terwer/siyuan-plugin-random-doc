@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.2.0](https://github.com/terwer/siyuan-plugin-random-doc/compare/v1.1.0...v1.2.0) (2023-10-17)
+### Features
+* 支持快捷键：⌥⌘m ([4efc446](https://github.com/terwer/siyuan-plugin-random-doc/commit/4efc446edec8f1dcc7abea0ad3ec6f3cafc9826a))
+## [1.1.0](https://github.com/terwer/siyuan-plugin-random-doc/compare/v1.0.2...v1.1.0) (2023-10-16)
+* 代码重构、适配新版本、提供笔记本选择、新增继续漫游 ([ee23f24](https://github.com/terwer/siyuan-plugin-random-doc/commit/ee23f240616ebf5f8574bc14db63366c753ce59c))
 ## [1.0.2](https://github.com/terwer/siyuan-plugin-random-doc/compare/v1.0.1...v1.0.2) (2023-07-09)
 ### Bug Fixes
 * **deps:** bump zhi-lib-base from 0.2.4 to 0.4.2 ([7f0b864](https://github.com/terwer/siyuan-plugin-random-doc/commit/7f0b8642d79888c81e41f7e299c68d3fdb45972a))
@@ -21,7 +26,6 @@
 * **deps-dev:** bump vite-plugin-static-copy from 0.15.0 to 0.16.0 ([18b73b6](https://github.com/terwer/siyuan-plugin-random-doc/commit/18b73b691ec8bc0a455a2a40538054ac80d4081c))
 * **deps-dev:** bump vitest from 0.31.4 to 0.32.0 ([b199b4f](https://github.com/terwer/siyuan-plugin-random-doc/commit/b199b4ffcaebb058661175b55b328021ea0d7f00))
 ## 1.0.0 (2023-06-06)
-### Features
 * 文档漫步第一版 ([fcbf834](https://github.com/terwer/siyuan-plugin-random-doc/commit/fcbf834c1bf9183316dfa67748f84eb6fcf92f54))
 * 文档漫步第一版-基本可用版本 ([261dbd1](https://github.com/terwer/siyuan-plugin-random-doc/commit/261dbd1ab599548cb2e345436323bd4b897355c1))
 * 文档漫步第一版-基本页面，按钮事件等 ([1a2aafd](https://github.com/terwer/siyuan-plugin-random-doc/commit/1a2aafda47b2d446279275380dc6e8e65186895e))

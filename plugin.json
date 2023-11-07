@@ -2,7 +2,7 @@
   "name": "siyuan-plugin-random-doc",
   "author": "terwer",
   "url": "https://github.com/terwer/siyuan-plugin-random-doc",
-  "version": "1.0.2",
+  "version": "1.2.0",
   "minAppVersion": "2.9.0",
   "backends": [
     "windows",
