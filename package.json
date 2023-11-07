@@ -40,6 +40,6 @@
   },
   "dependencies": {
     "zhi-common": "^1.27.0",
-    "zhi-lib-base": "^0.4.4"
+    "zhi-lib-base": "^0.8.0"
   }
 }
