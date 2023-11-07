@@ -1,19 +1,12 @@
 # Changelog
 
 ## [1.2.1](https://github.com/terwer/siyuan-plugin-random-doc/compare/v1.2.0...v1.2.1) (2023-11-07)
-
-
 ### Bug Fixes
-
 * **deps:** bump actions/setup-node from 3 to 4 ([e66b1fb](https://github.com/terwer/siyuan-plugin-random-doc/commit/e66b1fb67443ea1db65b6a0e0bf0fc746b95c443))
 * **deps:** bump zhi-common from 1.24.1 to 1.27.0 ([90f921b](https://github.com/terwer/siyuan-plugin-random-doc/commit/90f921b1e09d4e1d78c12f9e20f2eca9d07e9d79))
 * **deps:** bump zhi-lib-base from 0.4.4 to 0.8.0 ([0994170](https://github.com/terwer/siyuan-plugin-random-doc/commit/0994170ce27d8b7202a4f3209fcf74b8d6094422))
-* 修复某些情况可能出现不兼容的问题 ([4c26f1c](https://github.com/terwer/siyuan-plugin-random-doc/commit/4c26f1c71d092746b908aa7cb40878bd86efa677))
 * 修复某些情况可能出现不兼容的问题 ([8cc2dcd](https://github.com/terwer/siyuan-plugin-random-doc/commit/8cc2dcdaa6489e9c7eda7d774570beed165ddf25))
-
-
 ### Miscellaneous
-
 * **deps-dev:** bump @types/minimist from 1.2.2 to 1.2.4 ([eb6d158](https://github.com/terwer/siyuan-plugin-random-doc/commit/eb6d158c5751b5f5d8f5c444ac9bdda093f654ea))
 * **deps-dev:** bump fast-glob from 3.3.1 to 3.3.2 ([b77744a](https://github.com/terwer/siyuan-plugin-random-doc/commit/b77744ac605e60748497fd0b7a8d893ecfab4679))
 * **deps-dev:** bump siyuan from 0.8.5 to 0.8.8 ([e405834](https://github.com/terwer/siyuan-plugin-random-doc/commit/e405834fade0e983209659a971102b284ade558c))
@@ -22,20 +15,17 @@
 * **deps-dev:** bump vite from 4.4.11 to 4.5.0 ([325a6bb](https://github.com/terwer/siyuan-plugin-random-doc/commit/325a6bbe6e7d1109a7e1971cf83da2e7271603d6))
 * **deps-dev:** bump vite-plugin-dts from 2.3.0 to 3.6.3 ([423a5e9](https://github.com/terwer/siyuan-plugin-random-doc/commit/423a5e97e65b4337f2bd2187c783b62785cc69c2))
 * **deps-dev:** bump vite-plugin-node-polyfills from 0.9.0 to 0.16.0 ([3714684](https://github.com/terwer/siyuan-plugin-random-doc/commit/3714684a19b4475ebe6e22b5e17bb871286b84f8))
-
 ## [1.2.0](https://github.com/terwer/siyuan-plugin-random-doc/compare/v1.1.0...v1.2.0) (2023-10-17)
 ### Features
 * 支持快捷键：⌥⌘m ([4efc446](https://github.com/terwer/siyuan-plugin-random-doc/commit/4efc446edec8f1dcc7abea0ad3ec6f3cafc9826a))
 ## [1.1.0](https://github.com/terwer/siyuan-plugin-random-doc/compare/v1.0.2...v1.1.0) (2023-10-16)
 * 代码重构、适配新版本、提供笔记本选择、新增继续漫游 ([ee23f24](https://github.com/terwer/siyuan-plugin-random-doc/commit/ee23f240616ebf5f8574bc14db63366c753ce59c))
 ## [1.0.2](https://github.com/terwer/siyuan-plugin-random-doc/compare/v1.0.1...v1.0.2) (2023-07-09)
-### Bug Fixes
 * **deps:** bump zhi-lib-base from 0.2.4 to 0.4.2 ([7f0b864](https://github.com/terwer/siyuan-plugin-random-doc/commit/7f0b8642d79888c81e41f7e299c68d3fdb45972a))
 * 修复文案错误 ([615e632](https://github.com/terwer/siyuan-plugin-random-doc/commit/615e63281f167e3c861b8e8f5196d1ddd591d739))
 * 显示文档标题 ([2693346](https://github.com/terwer/siyuan-plugin-random-doc/commit/2693346fd3fe72d8e5be80d3e691fe43a6ac7f8a))
 * 移除关闭提示 ([aaccdc6](https://github.com/terwer/siyuan-plugin-random-doc/commit/aaccdc62c01ecbbd22edb7db1cb4b3cba04e08fd))
 * 调整展示样式 ([eff85a5](https://github.com/terwer/siyuan-plugin-random-doc/commit/eff85a5d128d00d97025e2c0aa964f294b35dc21))
-### Miscellaneous
 * **deps-dev:** bump @sveltejs/vite-plugin-svelte from 2.4.1 to 2.4.2 ([27dfddb](https://github.com/terwer/siyuan-plugin-random-doc/commit/27dfddbd91247c5e0580a104eb4b646f164ecaf1))
 * **deps-dev:** bump @terwer/eslint-config-custom from 1.3.4 to 1.3.6 ([be54834](https://github.com/terwer/siyuan-plugin-random-doc/commit/be548341a99cfb4b6a8fd5e6c0b296b1fec3837f))
 * **deps-dev:** bump @tsconfig/svelte from 4.0.1 to 5.0.0 ([9d054dc](https://github.com/terwer/siyuan-plugin-random-doc/commit/9d054dc83c657405815dd43be1f55226754dd8d2))
