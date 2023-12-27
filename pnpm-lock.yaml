@@ -38,8 +38,8 @@ devDependencies:
     specifier: ^2.0.5
     version: 2.0.5
   siyuan:
-    specifier: ^0.8.8
-    version: 0.8.8
+    specifier: ^0.9.1
+    version: 0.9.1
   stylus:
     specifier: ^0.61.0
     version: 0.61.0
@@ -3405,8 +3405,8 @@ packages:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
     dev: true
 
-  /siyuan@0.8.8:
-    resolution: {integrity: sha512-hWADf2RsEhDVIZhGMVq1CdvI4r1gKOdoI8nSvNszF9ztK/cwKQo90EWDwz/V7uSyWoTgt2xVDZXsIk3ZAS3cvA==}
+  /siyuan@0.9.1:
+    resolution: {integrity: sha512-rcYbFwZX7756mvtBZF8IOOYqyj//qbap4XXBGGc37oRDYfaSO9wYMRPeU99JYe6clo32gYcfIIhMzwBRDSv9jg==}
     dev: true
 
   /slash@3.0.0:
