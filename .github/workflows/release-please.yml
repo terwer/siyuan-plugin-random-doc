@@ -33,13 +33,6 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
         uses: actions/checkout@v4
 
-      # Install Node.js
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: 'pnpm'
-
       # Install pnpm
       - name: Install pnpm
         if: ${{ steps.release.outputs.release_created }}
@@ -48,6 +41,13 @@ jobs:
         with:
           version: 9.9.0
           run_install: false
+      
+      # Install Node.js
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
 
       # Get pnpm store directory
       - name: Get pnpm store directory
