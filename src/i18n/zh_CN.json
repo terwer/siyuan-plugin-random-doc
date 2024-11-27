@@ -1,5 +1,10 @@
 {
   "randomDoc": "文档漫游",
   "setting": "设置",
-  "docFetchError": "啊哦，网络出小差了呢，再刷新试试~"
+  "docFetchError": "啊哦，网络出小差了呢，再刷新试试~",
+  "showLoading": "显示加载中",
+  "showLoadingTip": "漫游文档时是否显示显示加载中图标",
+  "cancel": "取消",
+  "save": "保存",
+  "settingConfigSaveSuccess": "配置保存成功"
 }

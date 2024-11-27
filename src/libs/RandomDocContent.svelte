@@ -46,7 +46,7 @@
 
   // methods
   export const doRandomDoc = async () => {
-    if(isLoading){
+    if (isLoading) {
       pluginInstance.logger.warn("上次随机还未结束，忽略")
       return
     }
@@ -126,7 +126,7 @@
 </script>
 
 <div class="fn__flex-1 protyle" data-loading="finished">
-  <Loading show={isLoading} />
+  <Loading show={isLoading && storeConfig.showLoading} />
   <div class="protyle-content protyle-content--transition" data-fullwidth="true">
     <div class="protyle-title protyle-wysiwyg--attr" style="margin: 16px 96px 0px;">
       <div
@@ -163,7 +163,9 @@
           {/each}
         </select>
         <span class="note-select-tip">继续漫游快捷键为：⌥⌘M</span>
-        <button class="action-item b3-button fr" on:click={doRandomDoc} title="⌥⌘M">继续漫游</button>
+        <button class="action-item b3-button fr" on:click={doRandomDoc} title="⌥⌘M">
+          {isLoading ? "正在漫游..." : "继续漫游"}
+        </button>
       </div>
       <div class="rnd-doc-custom-tips">
         <div
