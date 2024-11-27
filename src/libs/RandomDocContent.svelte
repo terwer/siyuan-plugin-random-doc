@@ -152,7 +152,6 @@
     // 处理自定义 sql
     if (storeConfig?.customSqlEnabled) {
       sqlList = JSON.parse(storeConfig?.sql ?? "[]")
-      debugger
       if (sqlList.length == 0) {
         showMessage(pluginInstance.i18n.customSqlEmpty, 7000, "error")
         return
