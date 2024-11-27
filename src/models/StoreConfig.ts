@@ -31,6 +31,10 @@ class StoreConfig {
    * 笔记本ID
    */
   public notebookId: string
+  /**
+   * 是否显示加载中
+   */
+  public showLoading: boolean
 }
 
 export default StoreConfig

@@ -1,7 +1,8 @@
 import RandomDocPlugin from "./index"
 import { icons } from "./utils/svg"
-import { openTab } from "siyuan"
+import { Dialog, Menu, openTab } from "siyuan"
 import RandomDocContent from "./libs/RandomDocContent.svelte"
+import RandomDocSetting from "./libs/RandomDocSetting.svelte"
 
 /**
  * 顶栏按钮
@@ -31,6 +32,54 @@ export async function initTopbar(pluginInstance: RandomDocPlugin) {
 
   topBarElement.addEventListener("click", async () => {
     await triggerRandomDoc(pluginInstance)
+  })
+
+  // 添加右键菜单
+  topBarElement.addEventListener("contextmenu", () => {
+    let rect = topBarElement.getBoundingClientRect()
+    // 如果获取不到宽度，则使用更多按钮的宽度
+    if (rect.width === 0) {
+      rect = document.querySelector("#barMore").getBoundingClientRect()
+    }
+    initContextMenu(pluginInstance, rect)
+  })
+}
+
+const initContextMenu = async (pluginInstance: RandomDocPlugin, rect: DOMRect) => {
+  const menu = new Menu("slugContextMenu")
+
+  menu.addItem({
+    iconHTML: icons.iconSetting,
+    label: pluginInstance.i18n.setting,
+    click: () => {
+      showSettingMenu(pluginInstance)
+    },
+  })
+
+  if (pluginInstance.isMobile) {
+    menu.fullscreen()
+  } else {
+    menu.open({
+      x: rect.right,
+      y: rect.bottom,
+      isLeft: true,
+    })
+  }
+}
+
+export const showSettingMenu = (pluginInstance: RandomDocPlugin) => {
+  const settingId = "siyuan-random-doc-setting"
+  const d = new Dialog({
+    title: `${pluginInstance.i18n.setting} - ${pluginInstance.i18n.randomDoc}`,
+    content: `<div id="${settingId}"></div>`,
+    width: pluginInstance.isMobile ? "92vw" : "720px",
+  })
+  new RandomDocSetting({
+    target: document.getElementById(settingId) as HTMLElement,
+    props: {
+      pluginInstance: pluginInstance,
+      dialog: d,
+    },
   })
 }
 

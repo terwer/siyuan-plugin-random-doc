@@ -1,5 +1,10 @@
 {
   "randomDoc": "Random Doc",
   "setting": "Setting",
-  "docFetchError": "Ahh, the network is out of business, try to refresh again~"
+  "docFetchError": "Ahh, the network is out of business, try to refresh again~",
+  "showLoading": "Show loading",
+  "showLoadingTip": "Whether to display the loading icon when roaming through documents",
+  "cancel": "Cancel",
+  "save": "Save",
+  "settingConfigSaveSuccess": "Configuration saved successfully"
 }

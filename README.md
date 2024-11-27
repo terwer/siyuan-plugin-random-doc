@@ -12,6 +12,13 @@ Document is like a box of chocolates. You never know what you're going to get
 
 ## update history
 
+**v1.3.0 (2024-11-27)**
+
+### Bug Fixes
+
+* Docker support added
+* Option to disable loading added
+
 **Version 1.2.1 (2023-11-07)**
 
 ### Bug Fixes
