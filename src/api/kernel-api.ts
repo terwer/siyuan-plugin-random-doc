@@ -84,6 +84,16 @@ class KernelApi extends BaseApi {
   }
 
   /**
+   * 获取自定义SQL随机文档
+   *
+   * @param sql
+   */
+  public async getCustomRandomDocId(sql: string): Promise<SiyuanData> {
+    this.logger.info("custom random sql =>", sql)
+    return await this.sql(sql)
+  }
+
+  /**
    * 获取块属性
    */
   public async getBlockAttrs(blockId: string): Promise<SiyuanData> {

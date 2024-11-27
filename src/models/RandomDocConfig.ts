@@ -26,15 +26,31 @@
 /**
  * 存储对象
  */
-class StoreConfig {
+class RandomDocConfig {
   /**
    * 笔记本ID
    */
   public notebookId: string
+
   /**
    * 是否显示加载中
    */
   public showLoading: boolean
+
+  /**
+   * 是否启用自定义 SQL
+   */
+  public customSqlEnabled: boolean
+
+  /**
+   * 自定义 SQL
+   */
+  public sql: string
+
+  /**
+   * 当前 SQL
+   */
+  public currentSql: string
 }
 
-export default StoreConfig
+export default RandomDocConfig

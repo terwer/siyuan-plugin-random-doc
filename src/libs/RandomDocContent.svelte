@@ -26,7 +26,7 @@
 <script lang="ts">
   import { onMount } from "svelte"
   import { storeName } from "../Constants"
-  import StoreConfig from "../models/StoreConfig"
+  import RandomDocConfig from "../models/RandomDocConfig"
   import { openTab, showMessage } from "siyuan"
   import RandomDocPlugin from "../index"
   import Loading from "./Loading.svelte"
@@ -36,13 +36,40 @@
 
   // vars
   let isLoading = false
-  let storeConfig: StoreConfig
+  let storeConfig: RandomDocConfig
   let notebooks = []
   let toNotebookId = ""
   let title = "文档漫步"
   let tips = "信息提升"
   let currentRndId = ""
   let content = "暂无内容"
+
+  let sqlList: any[] = []
+  let currentSql = ""
+
+  const getRndDocId = async () => {
+    let rndId: string
+    if (!storeConfig?.customSqlEnabled) {
+      const rndResult = await pluginInstance.kernelApi.getRandomRootBlocks(toNotebookId)
+      if (rndResult.code !== 0) {
+        showMessage(pluginInstance.i18n.docFetchError, 7000, "error")
+        throw new Error(rndResult.msg)
+      }
+      rndId = rndResult.data[0]?.root_id
+      pluginInstance.logger.info(`使用自带的随机到 ${rndId}`)
+    } else {
+      const customRndResult = await pluginInstance.kernelApi.getCustomRandomDocId(currentSql)
+      if (customRndResult.code !== 0) {
+        showMessage(pluginInstance.i18n.docFetchError, 7000, "error")
+        throw new Error(customRndResult.msg)
+      }
+      const firstKey = Object.keys(customRndResult.data[0])[0]
+      rndId = customRndResult.data[0][firstKey]
+      pluginInstance.logger.info(`使用自定义 SQL 随机到 ${rndId}`)
+    }
+
+    return rndId
+  }
 
   // methods
   export const doRandomDoc = async () => {
@@ -55,29 +82,25 @@
       isLoading = true
       pluginInstance.logger.info("开始漫游...")
       // 生成漫游ID
-      const rndResult = await pluginInstance.kernelApi.getRandomRootBlocks(toNotebookId)
-      if (rndResult.code !== 0) {
-        showMessage(pluginInstance.i18n.docFetchError, 7000, "error")
-        throw new Error(rndResult.msg)
-      }
-      const rndId = rndResult.data[0]?.root_id
-      currentRndId = rndId
-      if (!rndId) {
+      currentRndId = await getRndDocId()
+      if (!currentRndId) {
         throw new Error(new Date().toISOString() + "：" + pluginInstance.i18n.docFetchError)
       }
-      pluginInstance.logger.info(`已漫游到 ${rndId} ...`)
+      pluginInstance.logger.info(`已漫游到 ${currentRndId} ...`)
 
       //根块
-      const rootBlock = await pluginInstance.kernelApi.getBlockByID(rndId)
-      const doc = (await pluginInstance.kernelApi.getDoc(rndId)).data as any
+      const rootBlock = await pluginInstance.kernelApi.getBlockByID(currentRndId)
+      const doc = (await pluginInstance.kernelApi.getDoc(currentRndId)).data as any
       title = rootBlock.content
       content = doc.content ?? ""
       // 只读
       content = content.replace(/contenteditable="true"/g, 'contenteditable="false"')
       const total = await pluginInstance.kernelApi.getRootBlocksCount()
-      const visitCount = parseInt((await pluginInstance.kernelApi.getBlockAttrs(rndId))["custom-visit-count"] ?? 0)
+      const visitCount = parseInt(
+        (await pluginInstance.kernelApi.getBlockAttrs(currentRndId))["custom-visit-count"] ?? 0
+      )
       const newVisitCount = visitCount + 1
-      await pluginInstance.kernelApi.setBlockAttrs(rndId, {
+      await pluginInstance.kernelApi.setBlockAttrs(currentRndId, {
         "custom-visit-count": newVisitCount.toString(),
       })
       tips = `哇哦，穿越大山，跨过大河，在${total}篇文档中，我又为您找到了一篇新的，您已经访问过他${newVisitCount}次哦~`
@@ -93,7 +116,13 @@
     // 显示当前选择的名称
     storeConfig.notebookId = toNotebookId
     await pluginInstance.saveData(storeName, storeConfig)
-    pluginInstance.logger.info("storeConfig saved =>", storeConfig)
+    pluginInstance.logger.info("storeConfig saved toNotebookId =>", storeConfig)
+  }
+  const onSqlChange = async function () {
+    // 显示当前选择的名称
+    storeConfig.currentSql = currentSql
+    await pluginInstance.saveData(storeName, storeConfig)
+    pluginInstance.logger.info("storeConfig saved currentSql =>", storeConfig)
   }
 
   const openDocEditor = async () => {
@@ -119,6 +148,17 @@
     notebooks = notebooks.filter((notebook) => !notebook.closed && !hiddenNotebook.has(notebook.name))
     // 选中，若是没保存，获取第一个
     toNotebookId = storeConfig?.notebookId ?? notebooks[0].id
+
+    // 处理自定义 sql
+    if (storeConfig?.customSqlEnabled) {
+      sqlList = JSON.parse(storeConfig?.sql ?? "[]")
+      debugger
+      if (sqlList.length == 0) {
+        showMessage(pluginInstance.i18n.customSqlEmpty, 7000, "error")
+        return
+      }
+      currentSql = storeConfig?.currentSql ?? sqlList[0].sql
+    }
 
     // 开始漫游
     await doRandomDoc()
@@ -149,22 +189,43 @@
     >
       <div class="action-btn-group">
         <button class="action-item b3-button b3-button--outline" on:click={openDocEditor}>新页签编辑</button>
-        <span class="note-select-tip">选择漫游的笔记本：</span>
-        <select
-          class="action-item b3-select fn__flex-center fn__size200 notebook-select"
-          bind:value={toNotebookId}
-          on:change={notebookChange}
-        >
-          <option value="" selected>全部笔记本</option>
-          {#each notebooks as notebook}
-            <option value={notebook.id}>{notebook.name}</option>
-          {:else}
-            <option value="0">{pluginInstance.i18n.loading}...</option>
-          {/each}
-        </select>
-        <span class="note-select-tip">继续漫游快捷键为：⌥⌘M</span>
+
+        {#if storeConfig?.customSqlEnabled}
+          <select
+            class="action-item b3-select fn__flex-center fn__size200 notebook-select"
+            bind:value={currentSql}
+            on:change={onSqlChange}
+          >
+            {#if sqlList && sqlList.length > 0}
+              {#each sqlList as s (s.sql)}
+                <option value={s.sql}>{s.name}</option>
+              {/each}
+            {:else}
+              <option value="">{pluginInstance.i18n.loading}...</option>
+            {/if}
+          </select>
+          <span class="custom-sql">当前使用自定义 SQL 漫游</span>
+        {:else}
+          <span>
+            <select
+              class="action-item b3-select fn__flex-center fn__size200 notebook-select"
+              bind:value={toNotebookId}
+              on:change={notebookChange}
+            >
+              <option value="" selected>全部笔记本</option>
+              {#if notebooks && notebooks.length > 0}
+                {#each notebooks as notebook (notebook.id)}
+                  <option value={notebook.id}>{notebook.name}</option>
+                {/each}
+              {:else}
+                <option value="0">{pluginInstance.i18n.loading}...</option>
+              {/if}
+            </select>
+          </span>
+        {/if}
+
         <button class="action-item b3-button fr" on:click={doRandomDoc} title="⌥⌘M">
-          {isLoading ? "正在漫游..." : "继续漫游"}
+          {isLoading ? "正在漫游..." : "继续漫游(⌥⌘M)"}
         </button>
       </div>
       <div class="rnd-doc-custom-tips">
@@ -185,8 +246,10 @@
 <style lang="stylus">
   .fr
     float right
-  .note-select-tip
+  .custom-sql
     margin-left 20px
+    color: red
+    font-size 14px
   .action-btn-group
     margin:20px 0
     .action-item
