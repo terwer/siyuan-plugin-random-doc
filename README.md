@@ -12,6 +12,11 @@ Document is like a box of chocolates. You never know what you're going to get
 
 ## update history
 
+**v1.4.0 (2024-11-27)**
+### Features
+* Added support for custom SQL
+* Added Docker support
+
 **v1.3.0 (2024-11-27)**
 
 ### Bug Fixes
