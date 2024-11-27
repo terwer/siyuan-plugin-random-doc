@@ -31,23 +31,22 @@ jobs:
       # Checkout
       - name: Checkout
         if: ${{ steps.release.outputs.release_created }}
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Install Node.js
-      - name: Install Node.js
-        if: ${{ steps.release.outputs.release_created }}
+      - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          registry-url: 'https://registry.npmjs.org'
+          cache: 'pnpm'
 
       # Install pnpm
       - name: Install pnpm
         if: ${{ steps.release.outputs.release_created }}
-        uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
         id: pnpm-install
         with:
-          version: 8
+          version: 9.9.0
           run_install: false
 
       # Get pnpm store directory
