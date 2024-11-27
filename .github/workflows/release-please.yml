@@ -30,7 +30,7 @@ jobs:
       # Install pnpm
       - name: Install pnpm
         if: ${{ steps.release.outputs.release_created }}
-      - uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v4
         id: pnpm-install
         with:
           version: 9.13.2
@@ -38,10 +38,11 @@ jobs:
 
       # Install Node.js
       - name: Setup Node.js environment
+        if: ${{ steps.release.outputs.release_created }}
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'pnpm'
+          cache: "pnpm"
 
       # Get pnpm store directory
       - name: Get pnpm store directory
@@ -86,7 +87,7 @@ jobs:
       # Upload package to release
       # https://github.com/philips-labs/terraform-aws-github-runner/blob/main/.github/workflows/release.yml#L46
       - name: Upload package.zip to the release
-        if: ${{ steps.release.outputs.releases_created }}
+        if: ${{ steps.release.outputs.release_created }}
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
