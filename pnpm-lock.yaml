@@ -40,8 +40,8 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5
       siyuan:
-        specifier: ^0.8.9
-        version: 0.8.9
+        specifier: ^1.0.8
+        version: 1.0.8
       stylus:
         specifier: ^0.61.0
         version: 0.61.0
@@ -1990,8 +1990,8 @@ packages:
   siginfo@2.0.0:
     resolution: {integrity: sha512-ybx0WO1/8bSBLEWXZvEd7gMW3Sn3JFlW3TvX1nREbDLRNQNaeNN8WK0meBwPdAaOI7TtRRRJn/Es1zhrrCHu7g==}
 
-  siyuan@0.8.9:
-    resolution: {integrity: sha512-dKKr1sQKP9+zFl9E75DDtyXfkfzVpyBrtGGRvtjl9ji+46xTIipbj0O7kfXWnEbxKPMNHIZ7g0zPk5B5hQgr7w==}
+  siyuan@1.0.8:
+    resolution: {integrity: sha512-m6IVT70n8yoNnabjwNn6D0w0s+Dz63JO4fCiyso09JZSGbsreuTrxb1xM9IrVXIEqm5IT7tkU9O0ks1cdHR6Cw==}
 
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
@@ -4597,7 +4597,7 @@ snapshots:
 
   siginfo@2.0.0: {}
 
-  siyuan@0.8.9: {}
+  siyuan@1.0.8: {}
 
   slash@3.0.0: {}
 
