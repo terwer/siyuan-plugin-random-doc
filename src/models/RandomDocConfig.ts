@@ -23,6 +23,16 @@
  * questions.
  */
 
+export enum ReviewMode {
+  Once = "once",
+  Ebbinghaus = "ebbinghaus",
+}
+
+export enum FilterMode {
+  Notebook = "notebook",
+  Root = "root",
+}
+
 /**
  * 存储对象
  */
@@ -51,6 +61,26 @@ class RandomDocConfig {
    * 当前 SQL
    */
   public currentSql: string
+
+  /**
+   * 复习模式
+   */
+  reviewMode: ReviewMode = ReviewMode.Once
+
+  /**
+   * 过滤模式
+   */
+  filterMode: FilterMode = FilterMode.Notebook
+
+  /**
+   * 根块ID
+   */
+  rootId = ""
+
+  constructor() {
+    this.filterMode = this.filterMode || FilterMode.Notebook
+    this.rootId = this.rootId || ""
+  }
 }
 
 export default RandomDocConfig

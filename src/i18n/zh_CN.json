@@ -1,15 +1,18 @@
 {
   "randomDoc": "文档漫游",
   "setting": "设置",
-  "docFetchError": "啊哦，网络出小差了呢，再刷新试试~",
+  "docFetchError": "啊哦，暂未获取到数据，请按照指引操作或者刷新试试呢~",
   "showLoading": "显示加载中",
   "showLoadingTip": "漫游文档时是否显示显示加载中图标",
   "customSqlEnabled": "启用自定义SQL",
   "customSqlEnabledTip": "勾选之后将使用自定义 SQL 进行漫游，不再使用预设条件",
   "cancel": "取消",
   "save": "保存",
+  "ok": "确认",
   "settingConfigSaveSuccess": "配置保存成功",
   "sqlContent": "自定义SQL",
   "sqlContentTip": "自定义 sql，注意必须是合法的 JSON 数组，例如：[{\"name\":\"默认\",\"sql\":\"sql1\"]，注意：无论怎么写，自定义 sql 必须能返回唯一的一个文档 ID。",
-  "customSqlEmpty": "检测到开启自定义 SQL，请设置，自定义 SQL 不能为空"
+  "customSqlEmpty": "检测到开启自定义 SQL，请设置，自定义 SQL 不能为空",
+  "dataPanel": "数据面板",
+  "help": "查看帮助"
 }

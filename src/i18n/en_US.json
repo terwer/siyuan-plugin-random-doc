@@ -8,8 +8,11 @@
   "customSqlEnabledTip": "Check this to use custom SQL for browsing, instead of predefined conditions"
   "cancel": "Cancel",
   "save": "Save",
+  "ok": "Ok",
   "settingConfigSaveSuccess": "Configuration saved successfully",
   "sqlContent": "Custom SQL",
   "sqlContentTip": "Custom SQL, note that it must be a valid JSON array, for example: [{\"name\":\"默认\",\"sql\":\"sql1\"]",
-  "customSqlEmpty": "Custom SQL is detected to be enabled, please set it. Custom SQL cannot be empty."
+  "customSqlEmpty": "Custom SQL is detected to be enabled, please set it. Custom SQL cannot be empty.",
+  "dataPanel": "Data panel",
+  "help": "Help"
 }
