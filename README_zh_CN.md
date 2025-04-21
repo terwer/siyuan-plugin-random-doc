@@ -6,9 +6,23 @@
 
 文档就像一盒巧克力，你永远不知道下一个打开的是什么
 
-**支持快捷键：⌥⌘M**
+**「快速漫游」快捷键(⌥⌘M)：**
+  * Windows：Alt+Ctrl+M
+  * Mac：Alt+Command+M
+
+**「艾宾浩斯-记得」快捷键(⌥⌘R)：**
+  * Windows：Alt+Ctrl+R
+  * Mac：Alt+Command+R
+
+**「艾宾浩斯-忘记」快捷键(⌥⌘F)：**
+  * Windows：Alt+Ctrl+F
+  * Mac：Alt+Command+F
 
 **支持新窗口编辑**
+
+**支持数据面板**
+
+**点击 [?](https://siyuan.wiki/s/20250421162737-l6p21h5) 直达帮助文档**
 
 ## 更新历史
 

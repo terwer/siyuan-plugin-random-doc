@@ -6,11 +6,25 @@
 
 Document is like a box of chocolates. You never know what you're going to get
 
-**Support hot key：⌥⌘M**
+**Continue hot key：⌥⌘M**
+
+**Ebbinghaus ok hot key：⌥⌘R**
+
+**Ebbinghaus cancel hot key：⌥⌘F**
 
 **Support new window edit**
 
 ## update history
+
+**v1.5.0(2025-04-21)**
+### Features  
+* Added filter mode, supporting notebooks and root documents
+* Added review mode, supporting "One-pass" and "Ebbinghaus"
+* Ebbinghaus mode supports keyboard shortcuts
+  * Remember: ⌥⌘R
+  * Forget: ⌥⌘F
+* Added data panel
+* Added direct access to help documentation
 
 **v1.4.0 (2024-11-27)**
 ### Features

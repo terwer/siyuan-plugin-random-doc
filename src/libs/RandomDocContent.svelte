@@ -32,7 +32,7 @@
   import Loading from "./Loading.svelte"
   import { EbbinghausReviewer } from "../service/EbbinghausReviewer"
   import ReviewDataPanel from "./ReviewDataPanel.svelte"
-  import { HtmlUtil, StrUtil } from "zhi-common"
+  import { isContentEmpty } from "../utils/utils"
 
   // props
   export let pluginInstance: RandomDocPlugin
@@ -71,6 +71,8 @@
         pluginInstance.logger.info("开始重新漫游...")
         return await doRandomDoc()
       })
+      // 总数
+      const total = await er.getTotalDocCount()
       if (storeConfig?.customSqlEnabled) {
         currentRndId = currentRndRes
         if (!currentRndId) {
@@ -103,16 +105,13 @@
         const doc = (await pluginInstance.kernelApi.getDoc(currentRndId)).data as any
         title = rootBlock.content
         content = doc.content ?? ""
-        const plainContent = HtmlUtil.filterHtml(content).trim()
-        if (StrUtil.isEmptyString(plainContent)) {
-          clearDoc()
-          tips = "当前文档正文为空"
+        // 处理空文档
+        const flag = await handleEmptyDoc()
+        if (!flag) {
           return
         }
         // 只读
         content = content.replace(/contenteditable="true"/g, 'contenteditable="false"')
-        // 总数
-        const total = await pluginInstance.kernelApi.getRootBlocksCount()
         // 更新访问次数
         await er.updateVisitCount(currentRndId)
         tips = `已漫游到新文档，共${total}篇文档，还有${unReviewedCount}篇文档尚未复习，加油💪~`
@@ -125,6 +124,26 @@
     }
   }
 
+  // 空文档处理
+  const handleEmptyDoc = async () => {
+    if (!isContentEmpty(content)) {
+      return true
+    } else {
+      // 更新访问次数
+      await er.updateVisitCount(currentRndId)
+      // 空文档没必要复习
+      if (reviewMode === ReviewMode.Ebbinghaus) {
+        await handleReviewFeedback(true)
+      }
+      clearDoc()
+      tips = "当前文档正文为空，2s 后继续下一个"
+      setTimeout(async () => {
+        await doRandomDoc()
+      }, 2000)
+      return false
+    }
+  }
+
   // 艾宾浩斯操作
   export const handleReviewFeedback = async (success: boolean) => {
     // 艾宾浩斯记忆法
@@ -132,7 +151,7 @@
     try {
       await er.updateEbbinghausInterval(currentRndId, success)
       const nextReviewDate = await getNextReviewDate()
-      showMessage(`已更新复习间隔，下次将在 ${nextReviewDate} 提醒`)
+      showMessage(`已更新复习间隔，下次将在 ${nextReviewDate} 提醒`, 2000)
       // 自动跳转下一篇
       await doRandomDoc()
     } catch (e) {

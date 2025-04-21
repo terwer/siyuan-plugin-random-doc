@@ -34,6 +34,17 @@ class EbbinghausReviewer {
     }
   }
 
+  public getTotalDocCount = async (): Promise<number> => {
+    if (this.storeConfig?.customSqlEnabled) {
+      return this.pluginInstance.kernelApi.getRootBlocksCount()
+    } else {
+      const filterCondition = this.buildFilterCondition()
+      const sql = `SELECT COUNT(id) AS total FROM blocks  WHERE type = 'd' ${filterCondition}`
+      const result = await this.pluginInstance.kernelApi.sql(sql)
+      return result.data?.[0]?.total || 0
+    }
+  }
+
   public checkAllReviewed = async (): Promise<boolean> => {
     const filterCondition = this.buildFilterCondition()
     const sql = `SELECT COUNT(id) AS total FROM blocks 
@@ -56,7 +67,6 @@ class EbbinghausReviewer {
     while (hasMore) {
       const sql = `SELECT id FROM blocks 
               WHERE type = 'd' 
-              AND TRIM(content)<>''
               ${filterCondition}
               AND id IN (
                 SELECT block_id FROM attributes 
@@ -154,7 +164,6 @@ class EbbinghausReviewer {
     const now = new Date().toISOString().split("T")[0]
     const sql = `SELECT id,count(id) as count FROM blocks 
                 WHERE type = 'd' 
-                AND TRIM(content)<>''  
                 ${filterCondition}
                 AND (
                   (SELECT value FROM attributes 
@@ -179,26 +188,51 @@ class EbbinghausReviewer {
 
   private getOnceModeDoc = async (): Promise<string> => {
     const filterCondition = this.buildFilterCondition()
-    const sql = `SELECT id,count(id) as count FROM blocks 
-                WHERE type = 'd' 
-                AND TRIM(content)<>''
-                ${filterCondition}
-                AND id NOT IN (
-                  SELECT block_id FROM attributes 
-                  WHERE name = 'custom-visit-count'
-                )
-                ORDER BY RANDOM() 
-                LIMIT 1`
-
-    const result = await this.pluginInstance.kernelApi.sql(sql)
-    if (result.code !== 0) {
-      throw new Error(result.msg)
+    // 先获取符合条件的总记录数
+    const countSql = `
+        SELECT COUNT(id) as total 
+        FROM blocks 
+        WHERE 
+            type = 'd' 
+            ${filterCondition}
+            AND id NOT IN (
+                SELECT block_id FROM attributes 
+                WHERE name = 'custom-visit-count'
+            )`
+    const countResult = await this.pluginInstance.kernelApi.sql(countSql)
+    if (countResult.code !== 0) {
+      throw new Error(countResult.msg)
     }
-    const data = result.data as any[]
-    if (!data || data.length === 0 || !data[0]?.id) {
+    const total = countResult.data[0]?.total || 0
+    if (total === 0) {
       return null
     }
-    return result.data[0]
+
+    // 随机选择一个未复习的文档
+    const selectSql = `
+        SELECT id 
+        FROM blocks 
+        WHERE 
+            type = 'd' 
+            ${filterCondition}
+            AND id NOT IN (
+                SELECT block_id FROM attributes 
+                WHERE name = 'custom-visit-count'
+            )
+        ORDER BY RANDOM() 
+        LIMIT 1`
+    const selectResult = await this.pluginInstance.kernelApi.sql(selectSql)
+    if (selectResult.code !== 0) {
+      throw new Error(selectResult.msg)
+    }
+    const selectedData = selectResult.data as any[]
+    if (!selectedData || selectedData.length === 0) return null
+    const selectedId = selectedData[0].id
+
+    return {
+      id: selectedId,
+      count: total,
+    } as any
   }
 
   private buildFilterCondition(): string {
