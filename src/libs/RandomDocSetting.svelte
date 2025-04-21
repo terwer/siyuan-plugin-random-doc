@@ -38,31 +38,31 @@
       JSON.stringify([
         {
           name: "默认",
-          sql: "SELECT DISTINCT b.root_id FROM blocks b ORDER BY random() LIMIT 1",
+          sql: "SELECT DISTINCT b.root_id FROM blocks b WHERE TRIM(b.content)<>'' ORDER BY random() LIMIT 1",
         },
         {
           name: "今天",
-          sql: "SELECT DISTINCT b.root_id FROM blocks b WHERE strftime('%Y-%m-%d', substr(b.created, 1, 4) || '-' || substr(b.created, 5, 2) || '-' || substr(b.created, 7, 2)) = date('now', 'start of day') ORDER BY random() LIMIT 1",
+          sql: "SELECT DISTINCT b.root_id FROM blocks b WHERE TRIM(b.content)<>'' AND strftime('%Y-%m-%d', substr(b.created, 1, 4) || '-' || substr(b.created, 5, 2) || '-' || substr(b.created, 7, 2)) = date('now', 'start of day') ORDER BY random() LIMIT 1",
         },
         {
           name: "3天内",
-          sql: "SELECT DISTINCT b.root_id FROM blocks b WHERE strftime('%Y-%m-%d', substr(b.created, 1, 4) || '-' || substr(b.created, 5, 2) || '-' || substr(b.created, 7, 2)) >= date('now', '-3 days') ORDER BY random() LIMIT 1",
+          sql: "SELECT DISTINCT b.root_id FROM blocks b WHERE TRIM(b.content)<>'' AND strftime('%Y-%m-%d', substr(b.created, 1, 4) || '-' || substr(b.created, 5, 2) || '-' || substr(b.created, 7, 2)) >= date('now', '-3 days') ORDER BY random() LIMIT 1",
         },
         {
           name: "7天内",
-          sql: "SELECT DISTINCT b.root_id FROM blocks b WHERE strftime('%Y-%m-%d', substr(b.created, 1, 4) || '-' || substr(b.created, 5, 2) || '-' || substr(b.created, 7, 2)) >= date('now', '-7 days') ORDER BY random() LIMIT 1",
+          sql: "SELECT DISTINCT b.root_id FROM blocks b WHERE TRIM(b.content)<>'' AND strftime('%Y-%m-%d', substr(b.created, 1, 4) || '-' || substr(b.created, 5, 2) || '-' || substr(b.created, 7, 2)) >= date('now', '-7 days') ORDER BY random() LIMIT 1",
         },
         {
           name: "一个月内",
-          sql: "SELECT DISTINCT b.root_id FROM blocks b WHERE strftime('%Y-%m-%d', substr(b.created, 1, 4) || '-' || substr(b.created, 5, 2) || '-' || substr(b.created, 7, 2)) >= date('now', '-1 month') ORDER BY random() LIMIT 1",
+          sql: "SELECT DISTINCT b.root_id FROM blocks b WHERE TRIM(b.content)<>'' AND strftime('%Y-%m-%d', substr(b.created, 1, 4) || '-' || substr(b.created, 5, 2) || '-' || substr(b.created, 7, 2)) >= date('now', '-1 month') ORDER BY random() LIMIT 1",
         },
         {
           name: "半年内",
-          sql: "SELECT DISTINCT b.root_id FROM blocks b WHERE strftime('%Y-%m-%d', substr(b.created, 1, 4) || '-' || substr(b.created, 5, 2) || '-' || substr(b.created, 7, 2)) >= date('now', '-6 months') ORDER BY random() LIMIT 1",
+          sql: "SELECT DISTINCT b.root_id FROM blocks b WHERE TRIM(b.content)<>'' AND strftime('%Y-%m-%d', substr(b.created, 1, 4) || '-' || substr(b.created, 5, 2) || '-' || substr(b.created, 7, 2)) >= date('now', '-6 months') ORDER BY random() LIMIT 1",
         },
         {
           name: "一年内",
-          sql: "SELECT DISTINCT b.root_id FROM blocks b WHERE strftime('%Y-%m-%d', substr(b.created, 1, 4) || '-' || substr(b.created, 5, 2) || '-' || substr(b.created, 7, 2)) >= date('now', '-1 year') ORDER BY random() LIMIT 1",
+          sql: "SELECT DISTINCT b.root_id FROM blocks b WHERE TRIM(b.content)<>'' AND strftime('%Y-%m-%d', substr(b.created, 1, 4) || '-' || substr(b.created, 5, 2) || '-' || substr(b.created, 7, 2)) >= date('now', '-1 year') ORDER BY random() LIMIT 1",
         },
       ])
   })

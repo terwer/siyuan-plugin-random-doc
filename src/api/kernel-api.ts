@@ -47,6 +47,7 @@ class KernelApi extends BaseApi {
    * 分页获取根文档
    *
    * @param keyword - 关键字
+   * @deprecated
    */
   public async getRootBlocksCount(keyword?: string): Promise<number> {
     const stmt = `SELECT COUNT(DISTINCT b.root_id) as count FROM blocks b`

@@ -3,6 +3,7 @@ import { icons } from "./utils/svg"
 import { Dialog, Menu, openTab } from "siyuan"
 import RandomDocContent from "./libs/RandomDocContent.svelte"
 import RandomDocSetting from "./libs/RandomDocSetting.svelte"
+import { EbbinghausReviewer } from "./service/EbbinghausReviewer"
 
 /**
  * 顶栏按钮
@@ -121,6 +122,44 @@ const triggerRandomDoc = async (pluginInstance: RandomDocPlugin) => {
 }
 
 /**
+ * 触发打开tab以及开始漫游-艾宾浩斯
+ *
+ * @param pluginInstance
+ * @param action
+ */
+const triggerRandomDocEbbinghaus = async (pluginInstance: RandomDocPlugin, action: boolean) => {
+  // 自定义tab
+  if (!pluginInstance.tabInstance) {
+    const tabInstance = openTab({
+      app: pluginInstance.app,
+      custom: {
+        title: pluginInstance.i18n.randomDoc,
+        icon: "iconRefresh",
+        fn: pluginInstance.customTabObject,
+      } as any,
+    })
+
+    // 修复后续API改动
+    if (tabInstance instanceof Promise) {
+      pluginInstance.tabInstance = await tabInstance
+    } else {
+      pluginInstance.tabInstance = tabInstance
+    }
+
+    // 加载内容
+    pluginInstance.tabContentInstance = new RandomDocContent({
+      target: pluginInstance.tabInstance.panelElement as HTMLElement,
+      props: {
+        pluginInstance: pluginInstance,
+      },
+    })
+  } else {
+    await pluginInstance.tabContentInstance.handleReviewFeedback(action)
+    console.log("再次点击或者重复触发")
+  }
+}
+
+/**
  * 注册快捷键
  *
  * @param pluginInstance
@@ -131,9 +170,31 @@ export async function registerCommand(pluginInstance: RandomDocPlugin) {
     langKey: "startRandomDoc",
     hotkey: "⌥⌘M",
     callback: async () => {
-      pluginInstance.logger.info("快捷键已触发 ⌘⇧M")
+      pluginInstance.logger.info("快捷键已触发 ⌥⌘M")
       await triggerRandomDoc(pluginInstance)
     },
   })
-  pluginInstance.logger.info("文档漫步快捷键已注册为 ⌘⇧M")
+  pluginInstance.logger.info("文档漫步快捷键已注册为 ⌥⌘M")
+
+  //添加快捷键-艾宾浩斯确认
+  pluginInstance.addCommand({
+    langKey: "startRandomDocEbbinghausOk",
+    hotkey: "⌥⌘R",
+    callback: async () => {
+      pluginInstance.logger.info("快捷键已触发 ⌥⌘R")
+      await triggerRandomDocEbbinghaus(pluginInstance, true)
+    },
+  })
+  pluginInstance.logger.info("文档漫步艾宾浩斯确认快捷键已注册为⌥⌘A")
+
+  //添加快捷键-艾宾浩斯失败
+  pluginInstance.addCommand({
+    langKey: "startRandomDocEbbinghausFail",
+    hotkey: "⌥⌘F",
+    callback: async () => {
+      pluginInstance.logger.info("快捷键已触发 ⌥⌘F")
+      await triggerRandomDocEbbinghaus(pluginInstance, false)
+    },
+  })
+  pluginInstance.logger.info("文档漫步艾宾浩斯失败快捷键已注册为⌥⌘D")
 }
