@@ -32,6 +32,7 @@
   import Loading from "./Loading.svelte"
   import { EbbinghausReviewer } from "../service/EbbinghausReviewer"
   import ReviewDataPanel from "./ReviewDataPanel.svelte"
+  import { HtmlUtil, StrUtil } from "zhi-common"
 
   // props
   export let pluginInstance: RandomDocPlugin
@@ -73,8 +74,7 @@
       if (storeConfig?.customSqlEnabled) {
         currentRndId = currentRndRes
         if (!currentRndId) {
-          currentRndId = undefined
-          content = ""
+          clearDoc()
           throw new Error(new Date().toISOString() + "：" + pluginInstance.i18n.docFetchError)
         }
         pluginInstance.logger.info(`已漫游到 ${currentRndId} ...`)
@@ -94,7 +94,7 @@
         currentRndId = currentRndRes?.id
         unReviewedCount = currentRndRes?.count ?? "0"
         if (!currentRndId) {
-          content = ""
+          clearDoc()
           throw new Error(new Date().toISOString() + "：" + pluginInstance.i18n.docFetchError)
         }
         pluginInstance.logger.info(`已漫游到 ${currentRndId} ...`)
@@ -103,6 +103,12 @@
         const doc = (await pluginInstance.kernelApi.getDoc(currentRndId)).data as any
         title = rootBlock.content
         content = doc.content ?? ""
+        const plainContent = HtmlUtil.filterHtml(content).trim()
+        if (StrUtil.isEmptyString(plainContent)) {
+          clearDoc()
+          tips = "当前文档正文为空"
+          return
+        }
         // 只读
         content = content.replace(/contenteditable="true"/g, 'contenteditable="false"')
         // 总数
@@ -112,56 +118,15 @@
         tips = `已漫游到新文档，共${total}篇文档，还有${unReviewedCount}篇文档尚未复习，加油💪~`
       }
     } catch (e) {
-      currentRndId = undefined
-      content = ""
+      clearDoc()
       tips = "文档漫游失败！=>" + e.toString()
     } finally {
       isLoading = false
     }
   }
 
-  // events
-  const notebookChange = async function () {
-    // 显示当前选择的名称
-    storeConfig.notebookId = toNotebookId
-    await pluginInstance.saveData(storeName, storeConfig)
-    pluginInstance.logger.info("storeConfig saved toNotebookId =>", storeConfig)
-  }
-
-  const onSqlChange = async function () {
-    // 显示当前选择的名称
-    storeConfig.currentSql = currentSql
-    await pluginInstance.saveData(storeName, storeConfig)
-    pluginInstance.logger.info("storeConfig saved currentSql =>", storeConfig)
-  }
-
-  const onReviewModeChange = async function () {
-    // 模式切换
-    storeConfig.reviewMode = reviewMode
-    await pluginInstance.saveData(storeName, storeConfig)
-    pluginInstance.logger.info("storeConfig saved reviewMode =>", storeConfig)
-  }
-
-  const onFilterModeChange = async function () {
-    // 模式切换
-    storeConfig.filterMode = filterMode
-    await pluginInstance.saveData(storeName, storeConfig)
-    pluginInstance.logger.info("storeConfig saved filterMode =>", storeConfig)
-  }
-
-  const onRootIdChange = async function () {
-    // 显示当前选择的名称
-    storeConfig.rootId = rootId
-    await pluginInstance.saveData(storeName, storeConfig)
-    pluginInstance.logger.info("storeConfig saved rootId =>", storeConfig)
-  }
-
-  const getNextReviewDate = async () => {
-    const attrs = await pluginInstance.kernelApi.getBlockAttrs(currentRndId)
-    return attrs.data["custom-next-review"] || "未设置"
-  }
-
-  const handleReviewFeedback = async (success: boolean) => {
+  // 艾宾浩斯操作
+  export const handleReviewFeedback = async (success: boolean) => {
     // 艾宾浩斯记忆法
     // 确认感觉会有点多余
     try {
@@ -191,6 +156,63 @@
     //     // nothing
     //   }
     // )
+  }
+
+  // events
+  const clearDoc = () => {
+    currentRndId = undefined
+    content = ""
+    tips = "条件已改变，请重新漫游！"
+  }
+
+  const notebookChange = async function () {
+    // 显示当前选择的名称
+    storeConfig.notebookId = toNotebookId
+    await pluginInstance.saveData(storeName, storeConfig)
+    // 重置文档
+    clearDoc()
+    pluginInstance.logger.info("storeConfig saved toNotebookId =>", storeConfig)
+  }
+
+  const onSqlChange = async function () {
+    // 显示当前选择的名称
+    storeConfig.currentSql = currentSql
+    await pluginInstance.saveData(storeName, storeConfig)
+    // 重置文档
+    clearDoc()
+    pluginInstance.logger.info("storeConfig saved currentSql =>", storeConfig)
+  }
+
+  const onReviewModeChange = async function () {
+    // 模式切换
+    storeConfig.reviewMode = reviewMode
+    await pluginInstance.saveData(storeName, storeConfig)
+    // 重置文档
+    clearDoc()
+    pluginInstance.logger.info("storeConfig saved reviewMode =>", storeConfig)
+  }
+
+  const onFilterModeChange = async function () {
+    // 模式切换
+    storeConfig.filterMode = filterMode
+    await pluginInstance.saveData(storeName, storeConfig)
+    // 重置文档
+    clearDoc()
+    pluginInstance.logger.info("storeConfig saved filterMode =>", storeConfig)
+  }
+
+  const onRootIdChange = async function () {
+    // 显示当前选择的名称
+    storeConfig.rootId = rootId
+    await pluginInstance.saveData(storeName, storeConfig)
+    // 重置文档
+    clearDoc()
+    pluginInstance.logger.info("storeConfig saved rootId =>", storeConfig)
+  }
+
+  const getNextReviewDate = async () => {
+    const attrs = await pluginInstance.kernelApi.getBlockAttrs(currentRndId)
+    return attrs.data["custom-next-review"] || "未设置"
   }
 
   const openDocEditor = async () => {
@@ -370,14 +392,20 @@
 
         {#if reviewMode === ReviewMode.Ebbinghaus && currentRndId}
           <span class="feedback-buttons">
-            <button class="b3-button b3-button--success" on:click={() => handleReviewFeedback(true)}>✅ 记得</button>
-            <button class="b3-button b3-button--warning" on:click={() => handleReviewFeedback(false)}>❌ 忘记</button>
+            <button class="b3-button b3-button--success" on:click={() => handleReviewFeedback(true)}>
+              ✅ {"记得(⌥⌘R)"}
+            </button>
+            <button class="b3-button b3-button--warning" on:click={() => handleReviewFeedback(false)}>
+              ❌ {"忘记(⌥⌘F)"}
+            </button>
           </span>
         {/if}
 
-        <button class="action-item b3-button fr" on:click={doRandomDoc} title="⌥⌘M">
-          {isLoading ? "正在漫游..." : "继续漫游(⌥⌘M)"}
-        </button>
+        {#if reviewMode !== ReviewMode.Ebbinghaus || !currentRndId}
+          <button class="action-item b3-button fr" on:click={doRandomDoc} title="⌥⌘M">
+            {isLoading ? "正在漫游..." : "继续漫游(⌥⌘M)"}
+          </button>
+        {/if}
       </div>
       <div class="rnd-doc-custom-tips">
         <div
