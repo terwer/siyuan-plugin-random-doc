@@ -27,7 +27,7 @@
   import { onMount } from "svelte"
   import { storeName } from "../Constants"
   import RandomDocConfig, { FilterMode, ReviewMode } from "../models/RandomDocConfig"
-  import { openTab, showMessage, confirm, Dialog } from "siyuan"
+  import { Dialog, openTab, showMessage } from "siyuan"
   import RandomDocPlugin from "../index"
   import Loading from "./Loading.svelte"
   import { EbbinghausReviewer } from "../service/EbbinghausReviewer"
@@ -305,6 +305,7 @@
         return
       }
       currentSql = storeConfig?.currentSql ?? sqlList[0].sql
+      storeConfig.currentSql = currentSql
     }
 
     // 开始漫游
@@ -444,24 +445,32 @@
 <style lang="stylus">
   .fr
     float right
+
   .custom-sql
     margin-left 20px
     color: red
     font-size 14px
+
   .action-btn-group
-    margin:20px 0
+    margin: 20px 0
+
     .action-item
       margin-left 10px
+
   //.filter-mode-title
   //  padding-left 10px
   .notebook-title
     padding-left 10px
+
   .mode-select-title
     padding-left 10px
+
   .feedback-buttons
     padding-left 10px
+
   .b3-select
     max-width 120px
+
   .help-icon
     font-size 12px
 </style>

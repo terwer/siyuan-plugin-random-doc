@@ -1,6 +1,7 @@
 import { showMessage, confirm } from "siyuan"
 import RandomDocPlugin from "../index"
 import RandomDocConfig, { FilterMode, ReviewMode } from "../models/RandomDocConfig"
+import { JsonUtil, StrUtil } from "zhi-common"
 
 /**
  * Ebbinghaus复习模式
